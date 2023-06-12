@@ -2,7 +2,10 @@ module github.com/Arneball/misc
 
 go 1.20
 
-require github.com/rs/zerolog v1.29.1
+require (
+	github.com/rs/zerolog v1.29.1
+	golang.org/x/sync v0.1.0
+)
 
 require (
 	github.com/mattn/go-colorable v0.1.12 // indirect
