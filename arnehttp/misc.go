@@ -62,6 +62,17 @@ func IgnorePath(path string) LoggingOpt {
 	}
 }
 
+func Params() LoggingOpt {
+	return func(w *wrappedW, e *zerolog.Event) *zerolog.Event {
+		query := w.r.URL.Query()
+		d := zerolog.Dict()
+		for k, v := range query {
+			d = d.Strs(k, v)
+		}
+		return e.Dict("query", d)
+	}
+}
+
 func LoggingHandler(h http.Handler, opts ...LoggingOpt) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		wr := wrappedW{ResponseWriter: w, code: 200, start: time.Now(), r: r}
